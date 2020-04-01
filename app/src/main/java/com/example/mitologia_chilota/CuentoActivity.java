@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CuentoActivity  extends Activity {
+public class CuentoActivity extends Activity {
 
     private Cuento cuento;
     private TextView titulo_cuento;

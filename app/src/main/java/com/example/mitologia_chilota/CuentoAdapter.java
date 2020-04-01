@@ -1,10 +1,13 @@
 package com.example.mitologia_chilota;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,10 +42,11 @@ public class CuentoAdapter extends BaseAdapter {
 
         convertView = LayoutInflater.from(context).inflate(R.layout.cuento, null);
 
-        TextView titulo_cuento = convertView.findViewById(R.id.historia_cuento);
-
+        TextView titulo_cuento = convertView.findViewById(R.id.titulo);
         titulo_cuento.setText(cuento.getTitulo());
 
+        ImageView btn_cuento = convertView.findViewById(R.id.img_cuento);
+        btn_cuento.setImageResource(convertView.getResources().getIdentifier( "com.example.mitologia_chilota:drawable/" + cuento.getRuta_imagen(), null, null));
         return convertView;
     }
 }

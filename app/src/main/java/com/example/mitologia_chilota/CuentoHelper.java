@@ -65,17 +65,36 @@ public class CuentoHelper extends SQLiteOpenHelper {
                 "\n" +
                 "Es el femenino de la perversidad; incansable novia de los solteros. Se deleita haciendo el mal a quienes la rechazan, sean estos animales o seres humanos. Los “Agarra”; para algunos es la hija de la “Condená”, de ahí las expresiones, “lo tentó la condená”, “catai fiura”, “Condenao”. La Fiura tiene gran poder de seducción y una vez saciado su apetito sexual, enloquece al desdichado, El poder de aliento, “Mal de Aire”, puede producir ciática o tullimiento y dejar a los animales descuadrilados, rengueados o quebrados. Si alguien quiere mofarse de alguna persona suele gritarle donde va esa “Fiura”.\", \"ruta_imagen\": \"fiura\"}");
 
+        cuentos.add("{\"id\": 4, \"titulo\": \"El Camahueto\", \"historia\": \"Este ser de la mitología chilota es un ternero parecido a un unicornio por su único cuerno en la frente, que brilla en las noches de luna. \n" +
+                "\n" +
+                "Quienes dicen haberlo visto, cuentan que es muy ágil, vigoroso, y de gran hermosura. Se dice que nace y se desarrolla donde hay caídas de agua o terrenos pantanosos, su vida aquí dura hasta haber alcanzado los 25 años (edad adulta) para luego, emigrar hacia el mar, En su viaje destruye los sembrados y la naturaleza que esté en su camino.\n" +
+                "\n" +
+                "Cuando se llega a saber sobre la existencia de un Camahueto en los terrenos de alguna persona, ésta busca a un brujo, el cual laceará al Camahueto con una soga de sargazo y lo llevará al mar tratando de no causar daño en el camino.\n" +
+                "\n" +
+                "El camahueto no se deja atrapar por los “limpios”, solo aquel que conozca el “arte” podrá atraparlo y siempre y cuando se encuentren en la tierra y en el plenilunio, para así cortarle el cuerno sin el cual se convertirá en un débil y mando como un cordero.\n" +
+                "\n" +
+                "A su cacho se le atribuyen poderes curativos, por lo que se lo raspa para sanar enfermedades tales como reumatismo, anemia, entre otras. Sus efectos son tan fuertes que si alguien ingiere una sobredosis puede quedar “encahuetado” (esquizofrénico, loco). Y si se mezclan con miel y chicha de manzana devuelve el vigor y la fuerza gastada, quedando como “Potro en primavera”.\n\", \"ruta_imagen\": \"camahueto\"}");
+
+        cuentos.add("{\"id\": 5, \"titulo\": \"Brujo\", \"historia\": \"Es un enemigo de los “limpios”, su poder es de extremada fuerza y su capacidad de convertir o transformar las cosas o las personas es tan increíble que puede asombras hasta a los más incrédulos.\n" +
+                "\n" +
+                "Los brujos formaron en Chiloé, una institución denominada “Recta Provincia” la cual tiene su “Casa Grande” o “Mayoría”, cerca del pueblo de Quicaví. Es ahí donde hacen los “Aquelarres” tranquilamente sin que nadie los interrumpa, ya que están resguadados por el “Invunche”.\n" +
+                "\n" +
+                "El Brujo tiene que cumplir con ciertos requisitos para pertenecer a la “Mayoría” y ejercer su “Arte”. Para reconocerlos se tira un puñado de afrecho en el brasero y si alguien estornuda, es porque es brujo, para eliminarlo tendrá que ser sorprendido por alguien en sus fechorías, así morirá antes de un año.\", \"ruta_imagen\": \"brujo\"}");
+
+        cuentos.add("{\"id\": 6, \"titulo\": \"El Invunche\", \"historia\": \"Es aquel ser hipertrofiado que cuida la cueva de los brujos. Es un niño recién nacido que es raptado o donado por algún brujo. Lo crían desnudo en la cueva y lo alimentan con carne humana y leche de gata. Cuando crece, los brujos lo transforman en un monstruo, al deformarlo. Poniéndole una pierna en el espinazo, que impide que se aleje de la cueva.\n" +
+                "\n" +
+                "Se le permite salir solo cuando tiene que alimentarse, desplazándose en tres patas y emitiendo sonidos guturales, asustando y horrorizando a aquellos que lo oyen. Si un “limpio” lo ve, se transforma o lo enlesa para siempre. Los únicos que pueden mirarlo sin peligro alguno, son los brujos.\n" +
+                "\n" +
+                "Si de noche le dan de palos a un invunche, significa que va a haber pestes y muertes. La carne de este ser cura cualquier enfermedad y cuando muere uno, los brujos se los “pleitean”.\", \"ruta_imagen\": \"invunche\"}");
+
         return cuentos;
     }
 
     public boolean insert(){
         Gson json = new Gson();
-        Log.d("Tamaño", ""+listaCuentos().size());
 
         for (int i = 0; i < listaCuentos().size(); i++){
             Cuento c = json.fromJson(listaCuentos().get(i).toString(), Cuento.class);
-            Cuento cuento = new Cuento();
-
             String query = "SELECT id FROM cuento WHERE ID = " + c.getId();
             SQLiteDatabase dbSelect = this.getReadableDatabase();
 
@@ -83,7 +102,13 @@ public class CuentoHelper extends SQLiteOpenHelper {
 
             if(cursor.getCount() == 1){
                 cursor.moveToFirst();
-                Log.d("ID", cursor.getString(cursor.getColumnIndex("id")));
+                SQLiteDatabase dbUpdate = this.getWritableDatabase();
+                cursor.moveToFirst();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("titulo", c.getTitulo());
+                contentValues.put("historia", c.getHistoria());
+                contentValues.put("ruta_imagen", c.getRuta_imagen());
+                dbUpdate.update("cuento", contentValues, "id = " + c.getId(), null);
             }else if(cursor.getCount() == 0){
                 SQLiteDatabase dbInsert = this.getWritableDatabase();
                 cursor.moveToFirst();
@@ -95,6 +120,7 @@ public class CuentoHelper extends SQLiteOpenHelper {
                 dbInsert.insert("cuento", null, contentValues);
             }
         }
+
         return true;
     }
 

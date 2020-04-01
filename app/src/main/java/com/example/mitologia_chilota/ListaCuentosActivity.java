@@ -18,6 +18,10 @@ public class ListaCuentosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            this.getSupportActionBar().hide();
+        } catch (NullPointerException e){}
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_cuentos);
 
