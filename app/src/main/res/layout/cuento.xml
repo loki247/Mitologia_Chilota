@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#B8B8B8"
+        android:fontFamily="@font/alegreya_sans_sc"
         android:gravity="center"
         android:textAlignment="gravity"
         android:textColor="#000000"

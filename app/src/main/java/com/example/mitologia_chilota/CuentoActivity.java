@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CuentoActivity extends Activity {
-
     private Cuento cuento;
     private TextView titulo_cuento;
     private TextView historia_cuento;
